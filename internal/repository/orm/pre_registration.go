@@ -19,6 +19,9 @@ func (repository *GORM) GetPreRegistrationByDocumentNumber(documentNumber string
 	return preRegistration, nil
 }
 func (repository *GORM) UpdatePreRegistrationById(id uint, preRegistration domain.PreRegistration) (domain.PreRegistration, error) {
+	if result := repository.DB.First(&domain.PreRegistration{}, id); result.Error != nil {
+		return domain.PreRegistration{}, result.Error
+	}
 	if result := repository.DB.Model(&preRegistration).Where("id = ?", id).Updates(&preRegistration); result.Error != nil {
 		return domain.PreRegistration{}, result.Error
 	}
@@ -26,5 +29,8 @@ func (repository *GORM) UpdatePreRegistrationById(id uint, preRegistration domai
 }
 
 func (repository *GORM) DeletePreRegistrationById(id uint) error {
-	return repository.DB.Delete(&domain.PreRegistration{}, id).Error
+	if result := repository.DB.First(&domain.PreRegistration{}, id); result.Error != nil {
+		return result.Error
+	}
+	return repository.DB.Where("id = ?", id).Delete(&domain.PreRegistration{}).Error
 }

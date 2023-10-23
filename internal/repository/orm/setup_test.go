@@ -8,6 +8,7 @@ func setupBeforeAllTestCases(t *testing.T) {
 	repository := GetRepository()
 	repository.Initialize("file::memory:?cache=shared", SQLite)
 	repository.Migrate()
+	repository.DeleteAllData()
 }
 
 func setupTestCase(t *testing.T) func(t *testing.T) {

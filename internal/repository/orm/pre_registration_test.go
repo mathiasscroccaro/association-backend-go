@@ -291,6 +291,44 @@ func UpdatePreRegistrationByIdWithNonExistentTestCase(t *testing.T) {
 	}
 }
 
+func DeletePreRegistrationByIdTestCase(t *testing.T) {
+	tearDownTestCase := setupTestCase(t)
+	defer tearDownTestCase(t)
+
+	repository := GetRepository()
+
+	preRegistrationData := domain.PreRegistration{
+		FullName:       "John Doe",
+		CPF:            "12345678907",
+		RG:             "12345678901",
+		BirthDate:      "2000-01-01",
+		GenderIdentity: "Male",
+		Nationality:    "Brazilian",
+		MaritalStatus:  "Single",
+		Email:          "johndoe@me.com",
+		PhoneNumber:    "12345678900",
+		CEP:            "12345678",
+		Street:         "Street",
+		HouseNumber:    "123",
+		Complement:     "Complement",
+		Neighborhood:   "Neighborhood",
+		City:           "City",
+		State:          "State",
+	}
+
+	preRegistration, err := repository.CreateAndSavePreRegistration(preRegistrationData)
+
+	if err != nil {
+		t.Errorf("Failed to create pre registration: %v", err)
+	}
+
+	err = repository.DeletePreRegistrationById(preRegistration.ID)
+
+	if err != nil {
+		t.Errorf("Failed to delete pre registration: %v", err)
+	}
+}
+
 func TestPropertyOperations(t *testing.T) {
 	setupBeforeAllTestCases(t)
 
@@ -302,5 +340,7 @@ func TestPropertyOperations(t *testing.T) {
 
 	t.Run("Update PreRegistration by ID", UpdatePreRegistrationByIdTestCase)
 	t.Run("Update PreRegistration by ID with not allowed CPF", UpdatePreRegistrationByIdWithNotAllowedCPFTestCase)
-	//t.Run("Update PreRegistration by ID with non existant register", UpdatePreRegistrationByIdWithNonExistentTestCase)
+	t.Run("Update PreRegistration by ID with non existant register", UpdatePreRegistrationByIdWithNonExistentTestCase)
+
+	t.Run("Delete PreRegistration by ID", DeletePreRegistrationByIdTestCase)
 }

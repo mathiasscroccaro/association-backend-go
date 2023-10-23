@@ -9,16 +9,16 @@ type ApiError struct {
 	Code    int
 }
 
-type UseCaseError struct {
-	Message string
-}
-
 func (ce ApiError) Error() string {
 	return ce.Message
 }
 
 func (ce ApiError) StatusCode() int {
 	return ce.Code
+}
+
+type UseCaseError struct {
+	Message string
 }
 
 func (ce UseCaseError) Error() string {
