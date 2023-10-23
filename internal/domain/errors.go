@@ -1,6 +1,6 @@
 package domain
 
-type IError interface {
+type IApiError interface {
 	Error() string
 }
 
@@ -17,19 +17,24 @@ func (ce ApiError) StatusCode() int {
 	return ce.Code
 }
 
-type UseCaseError struct {
+type IRepositoryError interface {
+	Error() string
+}
+
+type RepositoryError struct {
 	Message string
 }
 
-func (ce UseCaseError) Error() string {
+func (ce RepositoryError) Error() string {
 	return ce.Message
 }
 
 var (
-	ErrPreRegisterNotFound           IError = UseCaseError{"register not found"}
-	ErrPreRegisterDocumentDuplicated IError = UseCaseError{"document already registered"}
+	ErrPreRegisterNotFound           IRepositoryError = RepositoryError{"register not found"}
+	ErrPreRegisterDocumentDuplicated IRepositoryError = RepositoryError{"document already registered"}
+	ErrOtherRepositoryError          IRepositoryError = RepositoryError{"other repository error"}
 
-	Err400 IError = ApiError{"invalid request", 400}
-	Err404 IError = ApiError{"record not found", 404}
-	Err500 IError = ApiError{"internal server error", 500}
+	Err400 IApiError = ApiError{"invalid request", 400}
+	Err404 IApiError = ApiError{"record not found", 404}
+	Err500 IApiError = ApiError{"internal server error", 500}
 )

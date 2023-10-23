@@ -7,8 +7,8 @@ type IRepository interface {
 	Migrate()
 	DeleteAllData()
 
-	CreateAndSavePreRegistration(preRegistration domain.PreRegistration) (domain.PreRegistration, error)
-	GetPreRegistrationByDocumentNumber(documentNumber string) (domain.PreRegistration, error)
-	UpdatePreRegistrationById(id uint, preRegistration domain.PreRegistration) error
-	DeletePreRegistrationById(id uint) error
+	CreateAndSavePreRegistration(preRegistration domain.PreRegistration) (domain.PreRegistration, domain.IRepositoryError)
+	GetPreRegistrationByDocumentNumber(documentNumber string) (domain.PreRegistration, domain.IRepositoryError)
+	UpdatePreRegistrationById(id uint, preRegistration domain.PreRegistration) (domain.PreRegistration, domain.IRepositoryError)
+	DeletePreRegistrationById(id uint) domain.IRepositoryError
 }

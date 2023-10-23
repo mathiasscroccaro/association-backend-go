@@ -75,7 +75,7 @@ func CreateAndSavePreRegistrationWithSameCPFTestCase(t *testing.T) {
 	}
 
 	_, err = repository.CreateAndSavePreRegistration(preRegistrationData)
-	if err.Error() != "duplicated key not allowed" {
+	if err.Error() != "document already registered" {
 		t.Errorf("Pre Registration with same CPF already returned not expected error: %v", err)
 	}
 }
@@ -142,7 +142,7 @@ func GetPreRegistrationByDocumentNumberNonExistentTestCase(t *testing.T) {
 
 	_, err := repository.GetPreRegistrationByDocumentNumber("12345678900")
 
-	if err.Error() != "record not found" {
+	if err.Error() != "register not found" {
 		t.Errorf("Error message is not expected: %v", err)
 	}
 }
@@ -256,7 +256,7 @@ func UpdatePreRegistrationByIdWithNotAllowedCPFTestCase(t *testing.T) {
 
 	_, err = repository.UpdatePreRegistrationById(preRegistration.ID, preRegistrationData)
 
-	if err.Error() != "duplicated key not allowed" {
+	if err.Error() != "document already registered" {
 		t.Errorf("Failed to update pre registration: %v", err)
 	}
 }
@@ -286,7 +286,7 @@ func UpdatePreRegistrationByIdWithNonExistentTestCase(t *testing.T) {
 		State:          "State",
 	})
 
-	if err.Error() != "record not found" {
+	if err.Error() != "register not found" {
 		t.Errorf("Error message is not expected: %v", err)
 	}
 }
