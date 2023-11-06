@@ -45,3 +45,7 @@ type PreRegistrationRequest struct {
 
 	FormData PreRegistration `json:"formData"`
 }
+
+type PreRegistrationResponse struct {
+	Detail string
+}

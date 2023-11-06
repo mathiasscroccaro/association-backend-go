@@ -47,7 +47,7 @@ func (repository *GORM) Migrate() {
 	if repository.DB == nil {
 		log.Fatalf("Database must be initialized before migrate")
 	}
-	repository.DB.AutoMigrate(&domain.PreRegistration{})
+	repository.DB.AutoMigrate(&domain.PreRegistration{}, &domain.PersonalDocument{}, &domain.MedicalDocument{})
 	fmt.Printf("Schemas were migrated to database\n")
 }
 

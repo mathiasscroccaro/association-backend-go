@@ -1,5 +1,5 @@
 test:
-	go test ./...
+	go test ./... -v
 
 build:
 	go build cmd/webserver/main.go

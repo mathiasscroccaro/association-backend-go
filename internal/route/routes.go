@@ -12,5 +12,7 @@ func Router() *chi.Mux {
 	router.Get("/captcha", view.GetCaptchaView)
 	router.Post("/captcha", view.ValidateCaptchaSolution)
 
+	router.Post("/pre-register", view.SavePreRegisterView)
+
 	return router
 }

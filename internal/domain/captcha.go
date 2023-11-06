@@ -13,3 +13,13 @@ type CaptchaRequest struct {
 type ValidationResponse struct {
 	IsValid bool `json:"isValid"`
 }
+
+type CaptchaData struct {
+	Base64CaptchaImage string `json:"base64CaptchaImage"`
+	HashedSolution     string `json:"hashedSolution"`
+}
+
+type CaptchaSolutionData struct {
+	HashedSolution string `json:"hashedSolution"`
+	Solution       string `json:"solution"`
+}

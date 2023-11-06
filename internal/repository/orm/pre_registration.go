@@ -1,10 +1,13 @@
 package orm
 
-import "captcha_example/internal/domain"
+import (
+	"captcha_example/internal/domain"
+	"strings"
+)
 
 func (repository *GORM) CreateAndSavePreRegistration(preRegistration domain.PreRegistration) (domain.PreRegistration, domain.IRepositoryError) {
 	if result := repository.DB.Create(&preRegistration); result.Error != nil {
-		if result.Error.Error() == "duplicated key not allowed" {
+		if strings.Contains(result.Error.Error(), "duplicated key not allowed") {
 			return domain.PreRegistration{}, domain.ErrPreRegisterDocumentDuplicated
 		}
 		return domain.PreRegistration{}, domain.ErrOtherRepositoryError
